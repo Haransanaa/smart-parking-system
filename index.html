@@ -190,16 +190,16 @@
 <body>
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <button onclick="showContent('home')">Home</button>
+    <button onclick="showContent('dashboard')">Dashboard</button>
     <button onclick="showContent('system')">System Work</button>
-    <button onclick="showContent('slots')">Slots Status</button>
+    <button onclick="showContent('slots')">View Slots</button>
   </div>
 
   <!-- Landing Menu for Mobile -->
   <div class="menu" id="menu">
-    <button onclick="activateMenu('home')">Home</button>
+    <button onclick="activateMenu('dashboard')">Dashboard</button>
     <button onclick="activateMenu('system')">System Work</button>
-    <button onclick="activateMenu('slots')">Slots Status</button>
+    <button onclick="activateMenu('slots')">View Slots</button>
   </div>
 
   <!-- Content -->
@@ -215,10 +215,11 @@
       let content = document.getElementById("content");
       let html = "";
 
-      if (section === "home") {
-        html = `<div class="card"><h2>Home</h2>
-          <img src="home.png" alt="Home Image"/>
-          <p>Welcome to the Smart Parking System project.</p>
+      if (section === "dashboard") {
+        html = `<div class="card"><h2>Dashboard</h2>
+          <p><strong>Total Slots:</strong> 4</p>
+          <p><strong>Free Slots:</strong> 2</p>
+          <p><strong>Occupied Slots:</strong> 2</p>
         </div>`;
       } else if (section === "system") {
         html = `<div class="card"><h2>System Working</h2>
@@ -236,10 +237,10 @@
       } else if (section === "slots") {
         html = `<div class="card"><h2>Slots Status</h2>
           <div class="slots">
-            <div class="slot free">A1</div>
-            <div class="slot occupied">A2</div>
-            <div class="slot free">B1</div>
-            <div class="slot occupied">B2</div>
+            <div class="slot free">1</div>
+            <div class="slot occupied">2</div>
+            <div class="slot occupied">3</div>
+            <div class="slot free">4</div>
           </div>
         </div>`;
       }
