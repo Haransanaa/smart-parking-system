@@ -2,332 +2,221 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smart Parking System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Sidebar with Content</title>
   <style>
     body {
       margin: 0;
-      height: 100vh;
       font-family: Arial, sans-serif;
-      background: radial-gradient(circle at center, #0a0a0a, #000);
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    /* Background cursor effect */
-    .background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(0,255,200,0.35);
-      width: 200px; height: 200px;
-      transform: translate(-50%, -50%);
-      filter: blur(100px);
-      transition: transform 0.1s ease-out;
-    }
-
-    /* Landing Menu */
-    .menu {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      text-align: center;
-      z-index: 200;
-    }
-    .menu button {
-      padding: 15px 40px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .menu button:hover {
-      background: rgba(0,255,200,0.25);
-      color: #00ffe5;
-      box-shadow: 0 0 20px #00ffe5;
-    }
-
-    /* Sidebar (Desktop) */
+    /* Sidebar */
     .sidebar {
       position: fixed;
-      top: 0; left: -220px;
-      width: 220px; height: 100%;
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(15px);
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 220px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      padding-top: 2rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding-top: 2rem;
-      transition: all 0.8s ease;
-      box-shadow: 4px 0 20px rgba(0,255,200,0.3);
-      z-index: 100;
-    }
-    .sidebar.active { left: 0; }
-    .sidebar button {
-      width: 80%;
-      margin: 12px 0;
-      font-size: 1.1rem;
-      padding: 12px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      background: rgba(255,255,255,0.08);
-      color: #00ffe5;
-      font-weight: 600;
-      text-shadow: 0 0 10px #00ffe5;
-      transition: all 0.4s ease;
-    }
-    .sidebar button:hover {
-      background: rgba(0,255,200,0.2);
-      box-shadow: 0 0 15px #00ffe5, inset 0 0 8px rgba(0,255,200,0.5);
-      transform: scale(1.05);
-    }
-    .sidebar button.active {
-      background: rgba(0,255,200,0.25);
-      box-shadow: 0 0 25px #00ffe5, inset 0 0 12px rgba(0,255,200,0.6);
-      color: #fff;
-      text-shadow: 0 0 15px #00ffe5, 0 0 30px #00ffe5;
+      transition: all 0.5s ease;
+      z-index: 10;
     }
 
-    /* Content Area */
-    .content {
-      position: absolute;
-      top: 0; left: 220px;
-      width: calc(100% - 220px);
-      height: 100%;
-      padding: 2rem;
-      overflow-y: auto;
-      opacity: 0;
-      transform: translateX(50px);
-      transition: all 0.6s ease;
-      z-index: 1;
-      box-sizing: border-box;
+    .sidebar button {
+      margin: 10px auto;
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      color: cyan;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: 0.3s;
+      width: 80%;
+      box-shadow: 0 0 10px cyan, 0 0 20px cyan inset;
     }
-    .content.active {
-      opacity: 1;
-      transform: translateX(0);
+
+    .sidebar button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 20px cyan, 0 0 30px cyan inset;
+    }
+
+    /* Content */
+    .content {
+      margin-left: 240px;
+      padding: 2rem;
+      transition: margin 0.5s ease;
     }
 
     .card {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       padding: 20px;
       margin-bottom: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,255,200,0.15);
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+      transition: transform 0.3s ease;
     }
-    .card.show { opacity: 1; transform: translateY(0); }
-    .card img { width: 100%; height: auto; margin-bottom: 15px; border-radius: 10px; }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* Slots */
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
 
     .slot {
-      height: 50px;
-      display: flex; align-items: center; justify-content: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
       border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px cyan;
       font-weight: bold;
-      color: white;
-    }
-    .slot.green { background: rgba(0,255,0,0.4); }
-    .slot.red { background: rgba(255,0,0,0.5); }
-    .slot.yellow { background: rgba(255,255,0,0.6); }
-
-    /* Neon Scrollbar */
-    .content::-webkit-scrollbar { width: 10px; }
-    .content::-webkit-scrollbar-thumb {
-      background: #00ffe5;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #00ffe5, 0 0 20px #00ffe5;
     }
 
-    /* 📱 Mobile Responsive */
+    /* System images */
+    .system-images {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .system-images img {
+      max-width: 45%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    }
+
+    /* Mobile view adjustments */
     @media screen and (max-width: 768px) {
-      body { overflow: auto; }
-
       .sidebar {
-        display: none; /* hidden on mobile */
-      }
-      .content {
-        position: relative;
-        left: 0; top: 0;
-        width: 100%; height: auto;
-        padding: 1rem;
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
       }
 
-      /* When menu moves to top after selection */
-      .topbar {
-        position: fixed;
-        top: 0; left: 0;
+      .sidebar.vertical {
+        flex-direction: column;
+      }
+
+      .sidebar.horizontal {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .sidebar button {
+        width: auto;
+        margin: 5px;
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 1rem;
+        margin-top: 60px;
+      }
+
+      .card {
+        padding: 15px;
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+      }
+
+      .card img {
         width: 100%;
-        background: rgba(255,255,255,0.08);
-        backdrop-filter: blur(15px);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 10px;
-        z-index: 500;
-        box-shadow: 0 4px 15px rgba(0,255,200,0.3);
+        height: auto;
       }
-      .topbar button {
-        flex: 1;
-        margin: 0 5px;
-        padding: 10px;
+
+      .slot {
+        height: 40px;
         font-size: 0.9rem;
-        border-radius: 8px;
-        border: none;
-        background: rgba(255,255,255,0.08);
-        color: #00ffe5;
-        text-shadow: 0 0 5px #00ffe5;
       }
-      .content.mobile-active {
-        margin-top: 60px; /* push below topbar */
+
+      .system-images img {
+        max-width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Background -->
-  <div class="background"><div class="circle" id="circle"></div></div>
-
-  <!-- Landing Menu -->
-  <div class="menu" id="landing">
-    <button onclick="openSection('desc')">Project Description</button>
-    <button onclick="openSection('live')">View Live Footage</button>
-    <button onclick="openSection('slots')">View Slots</button>
-    <button onclick="openSection('system')">System Working</button>
-    <button onclick="openSection('dashboard')">Dashboard</button>
-    <button onclick="openSection('team')">Project Team</button>
+  <div class="sidebar vertical" id="sidebar">
+    <button onclick="showContent('about')">About</button>
+    <button onclick="showContent('system')">System Work</button>
+    <button onclick="showContent('slots')">Slots Status</button>
   </div>
 
-  <!-- Sidebar (Desktop) -->
-  <div class="sidebar" id="sidebar">
-    <button onclick="loadSection('desc')">Project Description</button>
-    <button onclick="loadSection('live')">View Live Footage</button>
-    <button onclick="loadSection('slots')">View Slots</button>
-    <button onclick="loadSection('system')">System Working</button>
-    <button onclick="loadSection('dashboard')">Dashboard</button>
-    <button onclick="loadSection('team')">Project Team</button>
+  <div class="content" id="content">
+    <section id="about" class="card">
+      <h2>About</h2>
+      <p>This project shows slot allocation and system workflow with a cool UI.</p>
+      <img src="about.png" alt="About Image">
+    </section>
+
+    <section id="system" class="card">
+      <h2>System Work</h2>
+      <div class="system-images">
+        <img src="system1.png" alt="System Work Image 1">
+        <img src="system2.png" alt="System Work Image 2">
+      </div>
+    </section>
+
+    <section id="slots" class="card">
+      <h2>Slots Status</h2>
+      <div class="slots">
+        <div class="slot">A1</div>
+        <div class="slot">A2</div>
+        <div class="slot">B1</div>
+        <div class="slot">B2</div>
+        <div class="slot">C1</div>
+        <div class="slot">C2</div>
+      </div>
+    </section>
   </div>
 
-  <!-- Content -->
-  <div class="content" id="content"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script>
-    const landing = document.getElementById("landing");
-    const sidebar = document.getElementById("sidebar");
-    const content = document.getElementById("content");
-    const circle = document.getElementById("circle");
-    let topbar = null;
+    function showContent(sectionId) {
+      document.querySelectorAll('.content section').forEach(sec => {
+        sec.style.display = "none";
+      });
+      document.getElementById(sectionId).style.display = "block";
 
-    // Cursor interactive background
-    document.addEventListener("mousemove", e => {
-      circle.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-
-    function openSection(section) {
+      // On mobile, switch menu to top horizontally
       if (window.innerWidth <= 768) {
-        // 📱 Mobile → Replace landing menu with topbar
-        if (!topbar) {
-          topbar = document.createElement("div");
-          topbar.className = "topbar";
-          topbar.innerHTML = landing.innerHTML.replaceAll("openSection", "loadSection");
-          document.body.appendChild(topbar);
-          landing.style.display = "none";
-          content.classList.add("mobile-active");
-        }
-        loadSection(section);
-      } else {
-        // 💻 Desktop → Normal sidebar animation
-        if (!sidebar.classList.contains("active")) {
-          gsap.to(".menu button", {
-            x: -300, opacity: 0, stagger: 0.1, duration: 0.6,
-            onComplete: () => {
-              landing.style.display = "none";
-              sidebar.classList.add("active");
-              content.classList.add("active");
-              loadSection(section);
-            }
-          });
-        } else {
-          loadSection(section);
-        }
+        document.getElementById("sidebar").classList.remove("vertical");
+        document.getElementById("sidebar").classList.add("horizontal");
       }
     }
 
-    function loadSection(section) {
-      // Highlight active button
-      const btns = (window.innerWidth <= 768 && topbar)
-        ? topbar.querySelectorAll("button")
-        : sidebar.querySelectorAll("button");
-
-      btns.forEach(btn => {
-        btn.classList.remove("active");
-        if (btn.innerText.toLowerCase().includes(section)) btn.classList.add("active");
-      });
-
-      // Content
-      let html = "";
-      if(section==="desc"){
-        html = `<div class="card"><h2>Project Description</h2>
-          <p>This project focuses on reducing traffic congestion inside parking sections by analyzing parking slots and displaying availability outside.</p></div>`;
-      } else if(section==="live"){
-        html = `<div class="card"><h2>Live Footage</h2>
-          <img src="PARKING.png" alt="Live Footage"/>
-          <p>AI detection highlights cars and free slots in real-time.</p></div>`;
-      } else if(section==="slots"){
-        html = `<div class="card"><h2>Slots Status</h2>
-          <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px;">
-          ${[1,2,3,4,5,6,7,8,9,10].map(n=>{
-            let status="green";
-            if([1,2,5,6,7,9,10].includes(n)) status="red"; 
-            if([3].includes(n)) status="yellow"; 
-            return `<div class="slot ${status}">${n}</div>`;
-          }).join("")}
-          </div></div>`;
-      } else if(section==="system"){
-        html = `<div class="card"><h2>System Working</h2>
-          <img src="GREYSCALE.png" alt="Greyscale Image"/>
-          <p>Greyscale conversion + line detection identifies parking slots and driveways.</p>
-        </div>`;
-      } else if(section==="dashboard"){
-        html = `<div class="card"><h2>Dashboard</h2>
-          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:15px;">
-            <div class="card">Total Slots: 10</div>
-            <div class="card">Occupied: 7</div>
-            <div class="card">Free: 2</div>
-            <div class="card">Reserved: 1</div>
-          </div>
-        </div>`;
-      } else if(section==="team"){
-        html = `<div class="card"><h2>Project Team</h2>
-          <ul>
-            <li>Haran N – 927623BME027</li>
-            <li>Harishwaran B – 927623BME031</li>
-            <li>Kanagarathinam S – 927623BME038</li>
-            <li>Kavipriyan S – 927623BME041</li>
-          </ul></div>`;
-      }
-      content.innerHTML = html;
-
-      // Animate cards
-      document.querySelectorAll(".card").forEach(el => {
-        el.classList.remove("show");
-        setTimeout(() => el.classList.add("show"), 100);
-      });
-    }
+    // Default visible section
+    document.querySelectorAll('.content section').forEach(sec => sec.style.display = "none");
+    document.getElementById("about").style.display = "block";
   </script>
 </body>
 </html>
