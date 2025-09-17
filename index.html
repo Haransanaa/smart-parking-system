@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Parking System</title>
   <style>
     body {
@@ -10,7 +11,7 @@
       font-family: Arial, sans-serif;
       background: radial-gradient(circle at center, #0a0a0a, #000);
       color: white;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     /* Background cursor effect */
@@ -106,7 +107,7 @@
     /* Content Area */
     .content {
       position: absolute;
-      top: 0; left: 220px; /* start after sidebar */
+      top: 0; left: 220px;
       width: calc(100% - 220px);
       height: 100%;
       padding: 2rem;
@@ -179,6 +180,24 @@
     .content {
       scroll-behavior: smooth;
     }
+
+    /* Mobile Responsive */
+    @media screen and (max-width: 1024px) {
+      .sidebar { width: 180px; padding-top: 1.5rem; }
+      .sidebar button { width: 90%; font-size: 1rem; padding: 10px; }
+      .content { left: 0; width: 100%; padding: 1rem; }
+      .card { padding: 15px; margin-bottom: 15px; font-size: 0.95rem; }
+      .menu button { padding: 12px 25px; font-size: 1rem; }
+      .card img { width: 100%; height: auto; }
+      .slot { height: 40px; font-size: 0.9rem; }
+    }
+
+    @media screen and (max-width: 480px) {
+      .menu button { padding: 10px 20px; font-size: 0.95rem; }
+      .card { padding: 12px; margin-bottom: 12px; font-size: 0.9rem; }
+      .slot { height: 35px; font-size: 0.85rem; }
+      .sidebar { width: 150px; }
+    }
   </style>
 </head>
 <body>
@@ -242,7 +261,6 @@
     }
 
     function loadSection(section) {
-      // Remove old active
       sidebar.querySelectorAll("button").forEach(btn => {
         btn.classList.remove("active");
         if (btn.innerText.toLowerCase().includes(section)) btn.classList.add("active");
@@ -294,7 +312,6 @@
 
       content.innerHTML = html;
 
-      // Animate cards
       document.querySelectorAll(".card").forEach(el => {
         el.classList.remove("show");
         setTimeout(() => el.classList.add("show"), 100);
